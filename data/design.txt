@@ -1,0 +1,18 @@
+Order:[id,Date,Status[delivered,prepared,accepted]]
+
+Product:[id,name,price,images,stock,description]
+
+Category:[id,name]
+
+subCategory:[id,name]
+
+Address:[id,name,buildingNo,city,area,description,streetname,floor,apartmentNo]
+
+User:[id,fname,lname,email,password,phoneNo,secPhoneNo,role]
+
+
+User 1---->M Order Normailized Order ->USERID
+User 1---->M Address Embeded max 10 addresses 
+Order M---M Products Normalized Order->{Total Price,totalNumberofItems,[{ProductId,numberofProductItems}]}
+Category 1--->M subCategory Normalized  subCategory=idCategory
+Product M--->M subCategory  Normalized Product->subCategoriesid
