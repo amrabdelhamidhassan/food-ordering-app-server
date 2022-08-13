@@ -10,7 +10,7 @@ const categorySchema = new mongoose.Schema(
       unique: true,
       trim: true,
       maxlength: [40, 'A Category name must have less or equal then 40 characters'],
-      minlength: [3, 'A Category name must have more or equal then 5 characters'],
+      minlength: [3, 'A Category name must have more or equal then 3 characters'],
     },
     slug: String,
   },
@@ -21,7 +21,12 @@ const categorySchema = new mongoose.Schema(
 );
 
 categorySchema.index({ slug: 1 });
-
+categorySchema.virtual('subCategories',
+{
+  ref:'SubCategory',
+  foreignField:'category',
+  localField:'_id'
+})
 // DOCUMENT MIDDLEWARE: runs before .save() and .create()
 categorySchema.pre('save', function(next) {
   this.slug = slugify(this.name, { lower: true });

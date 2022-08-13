@@ -7,11 +7,12 @@ const router = express.Router();
 router
   .route('/')
   .get(categoryController.getAllCategories)
-  // .post(categoryController.createCategory);
+  .post(categoryController.createCategory);
 
 router
   .route('/:id')
   .get(categoryController.getCategory)
-//   .delete(categoryController.deleteCategory);
+  .put(categoryController.editCategory)
+  .delete(categoryController.deleteCategory);
 
 module.exports = router;

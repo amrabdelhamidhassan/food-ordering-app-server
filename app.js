@@ -2,21 +2,26 @@ const express=require("express")
 const path=require("path")
 const helmet = require('helmet');
 const morgan = require('morgan');
-const rateLimit = require('express-rate-limit');
-const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
+const rateLimit = require('express-rate-limit');
+const compression=require('compression')
+const mongoSanitize = require('express-mongo-sanitize');
 const hpp = require('hpp');
+const bodyParser = require('body-parser')
 
-// const productRouter=require("./routes/productRoutes")
-// const userRouter=require("./routes/userRoutes")
+const productRouter=require("./routes/productRoutes")
+const userRouter=require("./routes/userRoutes")
 const categoryRouter=require("./routes/categoryRoutes")
-// const subcategoryRouter=require("./routes/subcategoryRoutes")
-// const orderRouter=require("./routes/orderRoutes")
+const subcategoryRouter=require("./routes/subcategoryRoutes")
+const orderRouter=require("./routes/orderRoutes")
+const errorController=require('./controllers/errorController')
+const AppError = require('./utils/AppError');
+
 
 const app=express();
 // Serving static files
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(bodyParser.json())
 // Development logging
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
@@ -45,12 +50,12 @@ app.use( hpp());
 
 // 3) ROUTES
  app.use('/api/v1/categories', categoryRouter);
-
-// app.use('/api/v1/products', productRouter);
-// app.use('/api/v1/users', userRouter);
-// app.use('/api/v1/subcategories', subcategoryRouter);
-// app.use('/api/v1/orders', orderRouter);
-
+ app.use('/api/v1/subcategories', subcategoryRouter);
+ app.use('/api/v1/products', productRouter);
+ app.use('/api/v1/users', userRouter);
+ app.use('/api/v1/orders', orderRouter);
+app.use(errorController);
+ app.use(compression())
 // app.all('*', (req, res, next) => {
 //   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 // });

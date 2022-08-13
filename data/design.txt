@@ -8,7 +8,7 @@ subCategory:[id,name]
 
 Address:[id,name,buildingNo,city,area,description,streetname,floor,apartmentNo]
 
-User:[id,fname,lname,email,password,phoneNo,secPhoneNo,role]
+User:[id,fname,lname,email,password,phoneNo,role]
 
 
 User 1---->M Order Normailized Order ->USERID
